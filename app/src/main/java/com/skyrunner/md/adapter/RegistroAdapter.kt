@@ -48,24 +48,24 @@ class RegistroAdapter(
             // Establecer valores iniciales solo si son diferentes y el campo NO tiene foco
             // Esto evita interrumpir la escritura del usuario
             if (!pesoBrutoTieneFoco) {
-                val pesoActual = binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0
-                if (pesoActual != registro.pesoBruto) {
-                    if (registro.pesoBruto > 0) {
-                        binding.etPesoBruto.setText(registro.pesoBruto.toString())
-                    } else {
-                        binding.etPesoBruto.setText("")
-                    }
+                val textoActual = binding.etPesoBruto.text.toString().trim()
+                val pesoActual = textoActual.toDoubleOrNull() ?: 0.0
+                val textoEsperado = if (registro.pesoBruto > 0) registro.pesoBruto.toString() else ""
+                
+                // Comparar el texto directamente para manejar mejor los casos de 0.0
+                if (textoActual != textoEsperado) {
+                    binding.etPesoBruto.setText(textoEsperado)
                 }
             }
 
             if (!metrosTieneFoco) {
-                val metrosActual = binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0
-                if (metrosActual != registro.metros) {
-                    if (registro.metros > 0) {
-                        binding.etMetros.setText(registro.metros.toString())
-                    } else {
-                        binding.etMetros.setText("")
-                    }
+                val textoActual = binding.etMetros.text.toString().trim()
+                val metrosActual = textoActual.toDoubleOrNull() ?: 0.0
+                val textoEsperado = if (registro.metros > 0) registro.metros.toString() else ""
+                
+                // Comparar el texto directamente para manejar mejor los casos de 0.0
+                if (textoActual != textoEsperado) {
+                    binding.etMetros.setText(textoEsperado)
                 }
             }
 
@@ -189,21 +189,22 @@ class RegistroAdapter(
                 try {
                     // Usar notifyItemChanged para evitar perder el foco en los campos
                     if (oldSize == nuevaLista.size) {
-                        // Si el tamaño es igual, solo notificar cambios en items específicos
-                        // pero solo si el valor realmente cambió significativamente
+                        // Si el tamaño es igual, notificar cambios en todos los items
+                        // para asegurar que los valores se actualicen correctamente
                         for (i in nuevaLista.indices) {
                             if (i < oldSize) {
                                 val anterior = listaAnterior[i]
                                 val nuevo = nuevaLista[i]
-                                // Solo actualizar si cambió el factor o el estado de outlier
-                                // No actualizar si solo cambió ligeramente el peso o metros (el usuario está escribiendo)
+                                // Verificar si hay cambios significativos
                                 val cambioSignificativo = anterior.factor != nuevo.factor || 
                                                          anterior.isOutlier != nuevo.isOutlier ||
-                                                         Math.abs(anterior.pesoBruto - nuevo.pesoBruto) > 0.001 ||
-                                                         Math.abs(anterior.metros - nuevo.metros) > 0.001
+                                                         Math.abs(anterior.pesoBruto - nuevo.pesoBruto) > 0.0001 ||
+                                                         Math.abs(anterior.metros - nuevo.metros) > 0.0001
                                 if (cambioSignificativo) {
                                     notifyItemChanged(i)
                                 }
+                            } else {
+                                notifyItemChanged(i)
                             }
                         }
                     } else {

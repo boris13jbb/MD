@@ -139,17 +139,26 @@ class FactorViewModel : ViewModel() {
 
     /**
      * Limpia los valores atípicos (outliers) de la lista
-     * Elimina todos los registros marcados como outliers
+     * Limpia todos los valores de todas las filas, dejándolas vacías
      */
     fun limpiarOutliers() {
         val listaActual = _registros.value ?: return
-        val listaFiltrada = listaActual.filter { !it.isOutlier }
         
-        // Si la lista queda vacía, agregar una fila vacía
-        if (listaFiltrada.isEmpty()) {
+        // Limpiar todos los valores de todas las filas, pero mantener las filas
+        val listaLimpia = listaActual.map { 
+            RegistroData(
+                pesoBruto = 0.0,
+                metros = 0.0,
+                factor = 0.0,
+                isOutlier = false
+            )
+        }
+        
+        // Si la lista está vacía, agregar una fila vacía
+        if (listaLimpia.isEmpty()) {
             _registros.value = listOf(RegistroData())
         } else {
-            _registros.value = listaFiltrada
+            _registros.value = listaLimpia
         }
         
         // Limpiar resultado anterior
@@ -163,6 +172,29 @@ class FactorViewModel : ViewModel() {
         _registros.value = listOf(RegistroData())
         _resultado.value = null
         _errorMessage.value = null
+    }
+
+    /**
+     * Elimina todas las filas vacías (sin valores)
+     * Mantiene al menos una fila vacía si todas están vacías
+     */
+    fun eliminarFilasVacias() {
+        val listaActual = _registros.value ?: return
+        val listaFiltrada = listaActual.filter { 
+            it.pesoBruto > 0 || it.metros > 0 
+        }
+        
+        // Si todas las filas estaban vacías, mantener una fila vacía
+        if (listaFiltrada.isEmpty()) {
+            _registros.value = listOf(RegistroData())
+        } else {
+            _registros.value = listaFiltrada
+        }
+        
+        // Limpiar resultado anterior si se eliminaron filas
+        if (listaFiltrada.size < listaActual.size) {
+            _resultado.value = null
+        }
     }
 
     /**

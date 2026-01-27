@@ -116,11 +116,32 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnLimpiarOutliers.setOnClickListener {
             viewModel.limpiarOutliers()
-            Toast.makeText(this, "Valores atípicos eliminados", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Todos los valores han sido limpiados", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnImportarCSV.setOnClickListener {
             seleccionarArchivoCSV.launch("*/*")
+        }
+
+        binding.btnEliminarFilasVacias.setOnClickListener {
+            val cantidadAntes = viewModel.registros.value?.size ?: 0
+            viewModel.eliminarFilasVacias()
+            val cantidadDespues = viewModel.registros.value?.size ?: 0
+            val eliminadas = cantidadAntes - cantidadDespues
+            
+            if (eliminadas > 0) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.filas_vacias_eliminadas, eliminadas),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    this,
+                    getString(R.string.sin_filas_vacias),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

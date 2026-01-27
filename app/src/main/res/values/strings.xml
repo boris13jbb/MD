@@ -23,4 +23,7 @@
     <string name="error_importar_csv">Error al importar CSV: %1$s</string>
     <string name="exito_importar_csv">Se importaron %1$d registros correctamente</string>
     <string name="formato_csv_invalido">El formato del CSV es inválido. Debe tener al menos 2 columnas (Peso, Metros)</string>
+    <string name="eliminar_filas_vacias">Eliminar Filas Vacías</string>
+    <string name="filas_vacias_eliminadas">Se eliminaron %1$d fila(s) vacía(s)</string>
+    <string name="sin_filas_vacias">No hay filas vacías para eliminar</string>
 </resources>
