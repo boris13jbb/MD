@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme compatible con Material Components -->
+    <style name="Theme.MD" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Material colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface</item>
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <!-- AppCompat compatibility -->
+        <item name="colorAccent">@color/secondary</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Material Components specific -->
+        <item name="materialCardViewStyle">@style/Widget.MaterialComponents.CardView</item>
+    </style>
+</resources>

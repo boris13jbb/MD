@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Calculadora de Factor</string>
+    <string name="peso_bruto">Peso Bruto</string>
+    <string name="metros">Metros</string>
+    <string name="factor">Factor</string>
+    <string name="agregar_fila">Agregar Fila</string>
+    <string name="calcular_factor">Calcular Factor</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="resultado_title">Resultados</string>
+    <string name="factor_promedio">Factor Promedio</string>
+    <string name="margen_error">Margen de Error</string>
+    <string name="total_registros">Total de Registros</string>
+    <string name="limpiar_outliers">Limpiar Valores Atípicos</string>
+    <string name="historial">Historial</string>
+    <string name="ultimos_calculos">Últimos 5 Cálculos</string>
+    <string name="sin_historial">No hay historial disponible</string>
+    <string name="volver">Volver</string>
+    <string name="hint_peso_bruto">Ingrese peso bruto</string>
+    <string name="hint_metros">Ingrese metros</string>
+    <string name="error_peso_invalido">El peso bruto debe ser mayor que 0</string>
+    <string name="error_sin_registros">Debe haber al menos un registro válido</string>
+</resources>
