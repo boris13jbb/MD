@@ -1,9 +1,11 @@
 package com.skyrunner.md
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +15,11 @@ import com.skyrunner.md.adapter.RegistroAdapter
 import com.skyrunner.md.databinding.ActivityMainBinding
 import com.skyrunner.md.utils.HistorialHelper
 import com.skyrunner.md.viewmodel.FactorViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 /**
  * MainActivity - Pantalla principal de la aplicación
@@ -27,6 +33,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var registroAdapter: RegistroAdapter
     private lateinit var historialAdapter: HistorialAdapter
     private lateinit var historialHelper: HistorialHelper
+
+    // Contract para seleccionar archivo CSV
+    private val seleccionarArchivoCSV = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            importarCSV(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +113,15 @@ class MainActivity : AppCompatActivity() {
         binding.btnCalcular.setOnClickListener {
             viewModel.calcularFactorGrupo()
         }
+
+        binding.btnLimpiarOutliers.setOnClickListener {
+            viewModel.limpiarOutliers()
+            Toast.makeText(this, "Valores atípicos eliminados", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnImportarCSV.setOnClickListener {
+            seleccionarArchivoCSV.launch("*/*")
+        }
     }
 
     /**
@@ -152,5 +176,54 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         // Actualizar historial cuando se vuelve a la pantalla
         actualizarHistorial()
+    }
+
+    /**
+     * Importa datos desde un archivo CSV
+     * @param uri URI del archivo CSV seleccionado
+     */
+    private fun importarCSV(uri: Uri) {
+        lifecycleScope.launch {
+            try {
+                val contenido = withContext(Dispatchers.IO) {
+                    contentResolver.openInputStream(uri)?.use { inputStream ->
+                        BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                            reader.readText()
+                        }
+                    } ?: ""
+                }
+
+                if (contenido.isEmpty()) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.formato_csv_invalido),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@launch
+                }
+
+                val registrosImportados = viewModel.importarDesdeCSV(contenido)
+
+                if (registrosImportados > 0) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.exito_importar_csv, registrosImportados),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.formato_csv_invalido),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.error_importar_csv, e.message),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 }

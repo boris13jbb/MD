@@ -178,4 +178,50 @@ class FactorViewModel : ViewModel() {
             0.0
         }
     }
+
+    /**
+     * Importa registros desde un archivo CSV
+     * El formato esperado es: peso,metros (una línea por registro)
+     * @param contenidoCSV Contenido del archivo CSV como String
+     * @return Número de registros importados exitosamente
+     */
+    fun importarDesdeCSV(contenidoCSV: String): Int {
+        val lineas = contenidoCSV.split("\n")
+        val nuevosRegistros = mutableListOf<RegistroData>()
+        var registrosImportados = 0
+
+        for (linea in lineas) {
+            val lineaLimpia = linea.trim()
+            if (lineaLimpia.isEmpty()) continue
+
+            // Dividir por coma o punto y coma
+            val columnas = lineaLimpia.split(",", ";")
+            
+            if (columnas.size >= 2) {
+                val peso = columnas[0].trim().toDoubleOrNull()
+                val metros = columnas[1].trim().toDoubleOrNull()
+
+                if (peso != null && metros != null && peso > 0) {
+                    val factor = metros / peso
+                    nuevosRegistros.add(
+                        RegistroData(
+                            pesoBruto = peso,
+                            metros = metros,
+                            factor = factor
+                        )
+                    )
+                    registrosImportados++
+                }
+            }
+        }
+
+        if (nuevosRegistros.isNotEmpty()) {
+            val listaActual = _registros.value?.toMutableList() ?: mutableListOf()
+            // Agregar los nuevos registros a la lista existente
+            listaActual.addAll(nuevosRegistros)
+            _registros.value = listaActual
+        }
+
+        return registrosImportados
+    }
 }

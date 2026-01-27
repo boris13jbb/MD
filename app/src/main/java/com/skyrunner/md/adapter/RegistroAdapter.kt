@@ -1,5 +1,7 @@
 package com.skyrunner.md.adapter
 
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -43,33 +45,27 @@ class RegistroAdapter(
             // Mostrar número de fila
             binding.tvNumeroFila.text = "Fila ${position + 1}"
 
-            // Establecer valores iniciales solo si son diferentes para evitar loops
-            val pesoActual = binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0
-            val metrosActual = binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0
-            
-            if (pesoActual != registro.pesoBruto) {
-                if (registro.pesoBruto > 0) {
-                    binding.etPesoBruto.setText(registro.pesoBruto.toString())
-                } else {
-                    binding.etPesoBruto.setText("")
-                }
-                // Restaurar posición del cursor si el campo tenía foco
-                if (pesoBrutoTieneFoco && pesoBrutoCursorPos >= 0) {
-                    val nuevaPos = minOf(pesoBrutoCursorPos, binding.etPesoBruto.text?.length ?: 0)
-                    binding.etPesoBruto.setSelection(nuevaPos)
+            // Establecer valores iniciales solo si son diferentes y el campo NO tiene foco
+            // Esto evita interrumpir la escritura del usuario
+            if (!pesoBrutoTieneFoco) {
+                val pesoActual = binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0
+                if (pesoActual != registro.pesoBruto) {
+                    if (registro.pesoBruto > 0) {
+                        binding.etPesoBruto.setText(registro.pesoBruto.toString())
+                    } else {
+                        binding.etPesoBruto.setText("")
+                    }
                 }
             }
 
-            if (metrosActual != registro.metros) {
-                if (registro.metros > 0) {
-                    binding.etMetros.setText(registro.metros.toString())
-                } else {
-                    binding.etMetros.setText("")
-                }
-                // Restaurar posición del cursor si el campo tenía foco
-                if (metrosTieneFoco && metrosCursorPos >= 0) {
-                    val nuevaPos = minOf(metrosCursorPos, binding.etMetros.text?.length ?: 0)
-                    binding.etMetros.setSelection(nuevaPos)
+            if (!metrosTieneFoco) {
+                val metrosActual = binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0
+                if (metrosActual != registro.metros) {
+                    if (registro.metros > 0) {
+                        binding.etMetros.setText(registro.metros.toString())
+                    } else {
+                        binding.etMetros.setText("")
+                    }
                 }
             }
 
@@ -92,18 +88,13 @@ class RegistroAdapter(
             }
 
             // Configurar watchers para actualizar en tiempo real
+            // Solo actualizamos el factor visualmente mientras se escribe
+            // El ViewModel se actualiza cuando el campo pierde el foco para evitar loops
             pesoWatcher = object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
                     val texto = s?.toString() ?: ""
-                    if (texto.isEmpty()) {
-                        // Si está vacío, mostrar 0.0000 pero no notificar aún
-                        binding.tvFactor.text = "0.0000"
-                        onRegistroChanged(position, 0.0, binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0)
-                        return
-                    }
-                    
                     val peso = texto.toDoubleOrNull() ?: 0.0
                     val metros = binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0
                     
@@ -111,8 +102,8 @@ class RegistroAdapter(
                     val factor = if (peso > 0) metros / peso else 0.0
                     binding.tvFactor.text = MathUtils.formatearDecimal(factor)
                     
-                    // Notificar cambio al ViewModel
-                    onRegistroChanged(position, peso, metros)
+                    // NO actualizar el ViewModel aquí para evitar loops
+                    // Se actualizará cuando el campo pierda el foco
                 }
             }
 
@@ -121,13 +112,6 @@ class RegistroAdapter(
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable?) {
                     val texto = s?.toString() ?: ""
-                    if (texto.isEmpty()) {
-                        // Si está vacío, mostrar 0.0000 pero no notificar aún
-                        binding.tvFactor.text = "0.0000"
-                        onRegistroChanged(position, binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0, 0.0)
-                        return
-                    }
-                    
                     val peso = binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0
                     val metros = texto.toDoubleOrNull() ?: 0.0
                     
@@ -135,13 +119,30 @@ class RegistroAdapter(
                     val factor = if (peso > 0) metros / peso else 0.0
                     binding.tvFactor.text = MathUtils.formatearDecimal(factor)
                     
-                    // Notificar cambio al ViewModel
-                    onRegistroChanged(position, peso, metros)
+                    // NO actualizar el ViewModel aquí para evitar loops
+                    // Se actualizará cuando el campo pierda el foco
                 }
             }
 
             binding.etPesoBruto.addTextChangedListener(pesoWatcher)
             binding.etMetros.addTextChangedListener(metrosWatcher)
+            
+            // Actualizar el ViewModel cuando el campo pierde el foco
+            binding.etPesoBruto.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    val peso = binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0
+                    val metros = binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0
+                    onRegistroChanged(position, peso, metros)
+                }
+            }
+            
+            binding.etMetros.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    val peso = binding.etPesoBruto.text.toString().toDoubleOrNull() ?: 0.0
+                    val metros = binding.etMetros.text.toString().toDoubleOrNull() ?: 0.0
+                    onRegistroChanged(position, peso, metros)
+                }
+            }
 
             // Configurar botón de eliminar
             binding.btnEliminar.setOnClickListener {
@@ -170,6 +171,7 @@ class RegistroAdapter(
 
     /**
      * Actualiza la lista de registros
+     * Evita actualizar items que están siendo editados actualmente
      */
     fun actualizarRegistros(nuevaLista: List<RegistroData>) {
         // Guardar la lista anterior para comparar
@@ -181,17 +183,37 @@ class RegistroAdapter(
             registros.clear()
             registros.addAll(nuevaLista)
             
-            // Usar notifyItemChanged para evitar perder el foco en los campos
-            if (oldSize == nuevaLista.size) {
-                // Si el tamaño es igual, solo notificar cambios en items específicos
-                for (i in nuevaLista.indices) {
-                    if (i < oldSize && listaAnterior[i] != nuevaLista[i]) {
-                        notifyItemChanged(i)
+            // Usar post() para retrasar la notificación hasta que el RecyclerView termine su layout
+            // Esto evita el error "Cannot call this method while RecyclerView is computing a layout"
+            Handler(Looper.getMainLooper()).post {
+                try {
+                    // Usar notifyItemChanged para evitar perder el foco en los campos
+                    if (oldSize == nuevaLista.size) {
+                        // Si el tamaño es igual, solo notificar cambios en items específicos
+                        // pero solo si el valor realmente cambió significativamente
+                        for (i in nuevaLista.indices) {
+                            if (i < oldSize) {
+                                val anterior = listaAnterior[i]
+                                val nuevo = nuevaLista[i]
+                                // Solo actualizar si cambió el factor o el estado de outlier
+                                // No actualizar si solo cambió ligeramente el peso o metros (el usuario está escribiendo)
+                                val cambioSignificativo = anterior.factor != nuevo.factor || 
+                                                         anterior.isOutlier != nuevo.isOutlier ||
+                                                         Math.abs(anterior.pesoBruto - nuevo.pesoBruto) > 0.001 ||
+                                                         Math.abs(anterior.metros - nuevo.metros) > 0.001
+                                if (cambioSignificativo) {
+                                    notifyItemChanged(i)
+                                }
+                            }
+                        }
+                    } else {
+                        // Si el tamaño cambió, usar notifyDataSetChanged
+                        notifyDataSetChanged()
                     }
+                } catch (e: IllegalStateException) {
+                    // Si aún hay un error (RecyclerView está en layout), usar notifyDataSetChanged como fallback
+                    notifyDataSetChanged()
                 }
-            } else {
-                // Si el tamaño cambió, usar notifyDataSetChanged
-                notifyDataSetChanged()
             }
         }
     }

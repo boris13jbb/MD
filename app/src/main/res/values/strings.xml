@@ -19,4 +19,8 @@
     <string name="hint_metros">Ingrese metros</string>
     <string name="error_peso_invalido">El peso bruto debe ser mayor que 0</string>
     <string name="error_sin_registros">Debe haber al menos un registro válido</string>
+    <string name="importar_csv">Importar CSV</string>
+    <string name="error_importar_csv">Error al importar CSV: %1$s</string>
+    <string name="exito_importar_csv">Se importaron %1$d registros correctamente</string>
+    <string name="formato_csv_invalido">El formato del CSV es inválido. Debe tener al menos 2 columnas (Peso, Metros)</string>
 </resources>

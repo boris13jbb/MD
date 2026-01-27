@@ -78,27 +78,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAgregarFila"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
+                <!-- Primera fila de botones -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:text="@string/agregar_fila"
-                    app:icon="@android:drawable/ic_input_add" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnCalcular"
-                    android:layout_width="0dp"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAgregarFila"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/agregar_fila"
+                        app:icon="@android:drawable/ic_input_add" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCalcular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/calcular_factor"
+                        app:icon="@android:drawable/ic_menu_compass" />
+
+                </LinearLayout>
+
+                <!-- Segunda fila de botones -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:text="@string/calcular_factor"
-                    app:icon="@android:drawable/ic_menu_compass" />
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLimpiarOutliers"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/limpiar_outliers"
+                        app:icon="@android:drawable/ic_menu_delete" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnImportarCSV"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/importar_csv"
+                        app:icon="@android:drawable/ic_menu_upload" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
