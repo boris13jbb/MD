@@ -138,7 +138,24 @@
 
                 </LinearLayout>
 
-                <!-- Tercera fila de botones -->
+                <!-- Tercera fila de botones (Excel) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnImportarExcel"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/importar_excel"
+                        app:icon="@android:drawable/stat_notify_sync" />
+
+                </LinearLayout>
+
+                <!-- Cuarta fila de botones (Eliminar filas vacías) -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

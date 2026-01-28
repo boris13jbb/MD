@@ -14,6 +14,7 @@ kotlin = "2.0.21"
 composeBom = "2024.12.01"
 composeCompiler = "1.5.8"
 gson = "2.13.2"
+poi = "5.2.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +29,8 @@ androidx-material = { group = "com.google.android.material", name = "material", 
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+poi = { group = "org.apache.poi", name = "poi", version.ref = "poi" }
+poiOoxml = { group = "org.apache.poi", name = "poi-ooxml", version.ref = "poi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

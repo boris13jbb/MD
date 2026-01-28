@@ -26,4 +26,8 @@
     <string name="eliminar_filas_vacias">Eliminar Filas Vacías</string>
     <string name="filas_vacias_eliminadas">Se eliminaron %1$d fila(s) vacía(s)</string>
     <string name="sin_filas_vacias">No hay filas vacías para eliminar</string>
+    <string name="importar_excel">Importar Excel</string>
+    <string name="exito_importar_excel">Se importaron %1$d registros desde Excel correctamente</string>
+    <string name="error_importar_excel">Error al importar Excel: %1$s</string>
+    <string name="formato_excel_invalido">El formato del Excel es inválido. Debe tener al menos 2 columnas (Peso, Metros)</string>
 </resources>

@@ -20,6 +20,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.ss.usermodel.Sheet
+import org.apache.poi.ss.usermodel.Row
 
 /**
  * MainActivity - Pantalla principal de la aplicación
@@ -40,6 +43,15 @@ class MainActivity : AppCompatActivity() {
     ) { uri: Uri? ->
         uri?.let {
             importarCSV(it)
+        }
+    }
+
+    // Contract para seleccionar archivo Excel
+    private val seleccionarArchivoExcel = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            importarExcel(it)
         }
     }
 
@@ -121,6 +133,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnImportarCSV.setOnClickListener {
             seleccionarArchivoCSV.launch("*/*")
+        }
+
+        binding.btnImportarExcel.setOnClickListener {
+            seleccionarArchivoExcel.launch("*/*")
         }
 
         binding.btnEliminarFilasVacias.setOnClickListener {
@@ -242,6 +258,64 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(
                     this@MainActivity,
                     getString(R.string.error_importar_csv, e.message),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    /**
+     * Importa datos desde un archivo Excel (.xls, .xlsx)
+     * @param uri URI del archivo Excel seleccionado
+     */
+    private fun importarExcel(uri: Uri) {
+        lifecycleScope.launch {
+            try {
+                val registrosImportados = withContext(Dispatchers.IO) {
+                    contentResolver.openInputStream(uri)?.use { inputStream ->
+                        val workbook = WorkbookFactory.create(inputStream)
+                        val sheet: Sheet = workbook.getSheetAt(0) // Primera hoja
+                        val registros = mutableListOf<Pair<Double, Double>>()
+                        
+                        // Leer desde la segunda fila (índice 1) para saltar el encabezado
+                        for (rowIndex in 1 until sheet.lastRowNum + 1) {
+                            val row: Row? = sheet.getRow(rowIndex)
+                            if (row != null && row.lastCellNum >= 2) {
+                                val peso = row.getCell(0)?.numericCellValue ?: 0.0
+                                val metros = row.getCell(1)?.numericCellValue ?: 0.0
+                                
+                                if (peso > 0 && metros > 0) {
+                                    registros.add(Pair(peso, metros))
+                                }
+                            }
+                        }
+                        
+                        workbook.close()
+                        registros
+                    } ?: emptyList()
+                }
+
+                if (registrosImportados.isNotEmpty()) {
+                    // Importar los registros al ViewModel
+                    val contenidoCSV = registrosImportados.joinToString("\n") { "${it.first},${it.second}" }
+                    val cantidad = viewModel.importarDesdeCSV(contenidoCSV)
+                    
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.exito_importar_excel, cantidad),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.formato_excel_invalido),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.error_importar_excel, e.message ?: "Error desconocido"),
                     Toast.LENGTH_LONG
                 ).show()
             }

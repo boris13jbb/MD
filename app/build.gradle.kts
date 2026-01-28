@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.skyrunner.md"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -45,6 +45,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.gson)
+    
+    // Apache POI para leer archivos Excel
+    implementation(libs.poi)
+    implementation(libs.poiOoxml)
     
     // Compose
     implementation(platform(libs.compose.bom))
