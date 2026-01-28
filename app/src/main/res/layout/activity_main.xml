@@ -92,7 +92,16 @@
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
-                <!-- Primera fila de botones -->
+                <!-- SECCIÓN 1: Acciones Principales -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Acciones Principales"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,11 +136,67 @@
 
                 </LinearLayout>
 
-                <!-- Segunda fila de botones -->
+                <!-- SECCIÓN 2: Importación de Datos -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Importar Datos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnImportarCSV"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/importar_csv"
+                        android:textColor="?attr/colorSecondary"
+                        app:icon="@drawable/ic_upload_file"
+                        app:iconTint="?attr/colorSecondary"
+                        app:strokeColor="?attr/colorSecondary"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnImportarExcel"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/importar_excel"
+                        android:textColor="?attr/colorTertiary"
+                        app:icon="@drawable/ic_table_chart"
+                        app:iconTint="?attr/colorTertiary"
+                        app:strokeColor="?attr/colorTertiary"
+                        app:strokeWidth="1dp" />
+
+                </LinearLayout>
+
+                <!-- SECCIÓN 3: Gestión de Datos -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Gestión de Datos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -150,59 +215,17 @@
                         app:strokeWidth="1dp" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnImportarCSV"
+                        android:id="@+id/btnEliminarFilasVacias"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        android:text="@string/importar_csv"
-                        android:textColor="?attr/colorSecondary"
-                        app:icon="@drawable/ic_upload_file"
-                        app:iconTint="?attr/colorSecondary"
-                        app:strokeColor="?attr/colorSecondary"
-                        app:strokeWidth="1dp" />
-
-                </LinearLayout>
-
-                <!-- Tercera fila de botones (Excel) -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnImportarExcel"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/importar_excel"
-                        android:textColor="?attr/colorTertiary"
-                        app:icon="@drawable/ic_table_chart"
-                        app:iconTint="?attr/colorTertiary"
-                        app:strokeColor="?attr/colorTertiary"
-                        app:strokeWidth="1dp" />
-
-                </LinearLayout>
-
-                <!-- Cuarta fila de botones (Eliminar filas vacías) -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnEliminarFilasVacias"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:text="@string/eliminar_filas_vacias"
-                        android:textColor="#F59E0B"
+                        android:textColor="@color/warning"
                         app:icon="@drawable/ic_clear_all"
-                        app:iconTint="#F59E0B"
-                        app:strokeColor="#F59E0B"
+                        app:iconTint="@color/warning"
+                        app:strokeColor="@color/warning"
                         app:strokeWidth="1dp" />
 
                 </LinearLayout>
