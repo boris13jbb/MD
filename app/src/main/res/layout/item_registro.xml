@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:strokeColor="?attr/colorPrimary"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +28,12 @@
                 android:id="@+id/tvNumeroFila"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:text="Fila 1"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:textColor="?attr/colorPrimary" />
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="0dp"
@@ -41,8 +47,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/eliminar"
                 android:textColor="?attr/colorError"
-                app:icon="@android:drawable/ic_menu_delete"
-                app:iconTint="?attr/colorError" />
+                app:icon="@drawable/ic_delete"
+                app:iconTint="?attr/colorError"
+                app:iconGravity="textStart"
+                app:iconPadding="4dp" />
 
         </LinearLayout>
 
@@ -62,7 +70,8 @@
                 android:layout_weight="1"
                 app:boxStrokeColor="?attr/colorPrimary"
                 app:hintEnabled="true"
-                app:startIconDrawable="@android:drawable/ic_menu_agenda">
+                app:startIconDrawable="@drawable/ic_scale"
+                app:startIconTint="?attr/colorPrimary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPesoBruto"
@@ -82,7 +91,8 @@
                 android:layout_weight="1"
                 app:boxStrokeColor="?attr/colorPrimary"
                 app:hintEnabled="true"
-                app:startIconDrawable="@android:drawable/ic_menu_myplaces">
+                app:startIconDrawable="@drawable/ic_straighten"
+                app:startIconTint="?attr/colorSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMetros"

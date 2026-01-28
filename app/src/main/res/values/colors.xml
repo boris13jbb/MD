@@ -3,16 +3,33 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- Colores Material Design 3 -->
-    <color name="primary">#6750A4</color>
-    <color name="primary_dark">#4F378B</color>
-    <color name="secondary">#625B71</color>
-    <color name="tertiary">#7D5260</color>
-    <color name="error">#BA1A1A</color>
-    <color name="outlier_background">#FFEBEE</color>
-    <color name="outlier_background_dark">#3F1F1F</color>
-    <color name="surface">#FFFBFE</color>
-    <color name="surface_dark">#1C1B1F</color>
-    <color name="on_surface">#1C1B1F</color>
-    <color name="on_surface_dark">#E6E1E5</color>
+    <!-- Paleta de colores profesional moderna -->
+    <color name="primary">#2563EB</color>
+    <color name="primary_dark">#1E40AF</color>
+    <color name="primary_light">#3B82F6</color>
+    <color name="secondary">#10B981</color>
+    <color name="secondary_dark">#059669</color>
+    <color name="tertiary">#8B5CF6</color>
+    <color name="error">#EF4444</color>
+    <color name="error_dark">#DC2626</color>
+    <color name="warning">#F59E0B</color>
+    <color name="success">#10B981</color>
+    
+    <!-- Colores de superficie -->
+    <color name="outlier_background">#FEF2F2</color>
+    <color name="outlier_background_dark">#7F1D1D</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F8FAFC</color>
+    <color name="surface_dark">#1E293B</color>
+    
+    <!-- Colores de texto -->
+    <color name="on_surface">#0F172A</color>
+    <color name="on_surface_variant">#64748B</color>
+    <color name="on_surface_dark">#F1F5F9</color>
+    
+    <!-- Colores de acento -->
+    <color name="accent_blue">#3B82F6</color>
+    <color name="accent_green">#10B981</color>
+    <color name="accent_purple">#8B5CF6</color>
+    <color name="accent_orange">#F59E0B</color>
 </resources>

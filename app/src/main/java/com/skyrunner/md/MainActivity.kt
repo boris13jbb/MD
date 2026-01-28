@@ -159,6 +159,23 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        binding.btnBorrarHistorial.setOnClickListener {
+            android.app.AlertDialog.Builder(this)
+                .setTitle(getString(R.string.borrar_historial))
+                .setMessage(getString(R.string.confirmar_borrar_historial))
+                .setPositiveButton(getString(android.R.string.ok)) { _, _ ->
+                    historialHelper.limpiarHistorial()
+                    actualizarHistorial()
+                    Toast.makeText(
+                        this,
+                        getString(R.string.historial_borrado),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .setNegativeButton(getString(android.R.string.cancel), null)
+                .show()
+        }
     }
 
     /**

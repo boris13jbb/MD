@@ -30,4 +30,7 @@
     <string name="exito_importar_excel">Se importaron %1$d registros desde Excel correctamente</string>
     <string name="error_importar_excel">Error al importar Excel: %1$s</string>
     <string name="formato_excel_invalido">El formato del Excel es inválido. Debe tener al menos 2 columnas (Peso, Metros)</string>
+    <string name="borrar_historial">Borrar Historial</string>
+    <string name="historial_borrado">Historial borrado correctamente</string>
+    <string name="confirmar_borrar_historial">¿Está seguro de que desea borrar todo el historial?</string>
 </resources>

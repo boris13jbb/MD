@@ -37,29 +37,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp">
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:strokeColor="?attr/colorPrimary"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ingrese los datos de cada registro"
+                        android:gravity="center"
+                        android:text="📊 Ingrese los datos de cada registro"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        android:textColor="?attr/colorOnSurface" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:gravity="center"
                         android:text="Factor = Metros / Peso Bruto"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -95,7 +103,11 @@
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:text="@string/agregar_fila"
-                        app:icon="@android:drawable/ic_input_add" />
+                        android:textColor="?attr/colorPrimary"
+                        app:icon="@drawable/ic_add_circle"
+                        app:iconTint="?attr/colorPrimary"
+                        app:strokeColor="?attr/colorPrimary"
+                        app:strokeWidth="1dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnCalcular"
@@ -103,8 +115,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
+                        android:backgroundTint="?attr/colorPrimary"
                         android:text="@string/calcular_factor"
-                        app:icon="@android:drawable/ic_menu_compass" />
+                        android:textColor="@color/white"
+                        app:icon="@drawable/ic_calculate"
+                        app:iconTint="@color/white" />
 
                 </LinearLayout>
 
@@ -124,7 +139,11 @@
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:text="@string/limpiar_outliers"
-                        app:icon="@android:drawable/ic_menu_delete" />
+                        android:textColor="?attr/colorError"
+                        app:icon="@drawable/ic_delete_sweep"
+                        app:iconTint="?attr/colorError"
+                        app:strokeColor="?attr/colorError"
+                        app:strokeWidth="1dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnImportarCSV"
@@ -134,7 +153,11 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:text="@string/importar_csv"
-                        app:icon="@android:drawable/ic_menu_upload" />
+                        android:textColor="?attr/colorSecondary"
+                        app:icon="@drawable/ic_upload_file"
+                        app:iconTint="?attr/colorSecondary"
+                        app:strokeColor="?attr/colorSecondary"
+                        app:strokeWidth="1dp" />
 
                 </LinearLayout>
 
@@ -151,7 +174,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/importar_excel"
-                        app:icon="@android:drawable/stat_notify_sync" />
+                        android:textColor="?attr/colorTertiary"
+                        app:icon="@drawable/ic_table_chart"
+                        app:iconTint="?attr/colorTertiary"
+                        app:strokeColor="?attr/colorTertiary"
+                        app:strokeWidth="1dp" />
 
                 </LinearLayout>
 
@@ -168,7 +195,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/eliminar_filas_vacias"
-                        app:icon="@android:drawable/ic_menu_close_clear_cancel" />
+                        android:textColor="#F59E0B"
+                        app:icon="@drawable/ic_clear_all"
+                        app:iconTint="#F59E0B"
+                        app:strokeColor="#F59E0B"
+                        app:strokeWidth="1dp" />
 
                 </LinearLayout>
 
@@ -179,8 +210,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:strokeColor="?attr/colorSecondary"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -188,17 +222,40 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/historial"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        android:textColor="?attr/colorOnSurface" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/historial"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnBorrarHistorial"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/borrar_historial"
+                            android:textColor="?attr/colorError"
+                            android:textSize="12sp"
+                            app:icon="@drawable/ic_delete_forever"
+                            app:iconTint="?attr/colorError"
+                            app:iconGravity="textStart"
+                            app:iconPadding="4dp" />
+
+                    </LinearLayout>
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:gravity="center"
                         android:text="@string/ultimos_calculos"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                         android:textColor="?attr/colorOnSurfaceVariant" />
